@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import Unsplash from "../API/Unsplash";
+import ImagesGrid from "./ImagesGrid";
 
 class App extends Component {
   state = { images: [] };
@@ -11,7 +12,6 @@ class App extends Component {
         query: term,
       },
     });
-    console.log(Response.data.results);
     this.setState({ images: Response.data.results });
   };
 
@@ -20,7 +20,7 @@ class App extends Component {
       <div className="ui container" style={{ marginTop: "10px" }}>
         <h1>Unsplash Image Seach</h1>
         <SearchBar submit={this.onSubmitSearch} />
-        <h3> Found: {this.state.images.length} results </h3>
+        <ImagesGrid images={this.state.images} />
       </div>
     );
   }
