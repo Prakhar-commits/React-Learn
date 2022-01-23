@@ -1,0 +1,22 @@
+.item {
+  display: flex !important;
+  flex-direction: row;
+}
+
+.item img {
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.item:hover {
+  cursor: pointer;
+  background-color: #eeeeee;
+}
+
+.card {
+  width: 100% !important;
+}
+
+.field input {
+  width: 80% !important;
+}

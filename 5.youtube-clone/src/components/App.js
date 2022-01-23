@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import Youtube from "../API/Youtube";
 import VideoList from "./VideoList";
 import VideoBox from "./VideoBox";
+import "./style.css";
 
 class App extends Component {
   state = { videos: [], selectedVideo: null };
@@ -12,7 +13,7 @@ class App extends Component {
         q: term,
       },
     });
-    this.setState({ videos: response.data.items });
+    this.setState({ videos: response.data.items, selectedVideo: response.data.items[0] });
   };
 
   onVideoSelect = (video) => {
@@ -22,12 +23,11 @@ class App extends Component {
   mostPopularVideos = async () => {
     const mostPopVideos = await Youtube.get("/videos", {
       params: {
-        part: "snippet",
         chart: "mostPopular",
         regionCode: "IN",
       },
     });
-    this.setState({ videos: mostPopVideos.data.items });
+    this.setState({ videos: mostPopVideos.data.items, selectedVideo: mostPopVideos.data.items[0] });
   };
 
   componentDidMount() {
@@ -38,9 +38,13 @@ class App extends Component {
     return (
       <>
         <SearchBar onFromSubmit={this.onTermSubmit} />
-        <div className="ui container">
-          <VideoBox video={this.state.selectedVideo} />
-          <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+        <div className="ui container grid">
+          <div className="eleven wide column">
+            <VideoBox video={this.state.selectedVideo} />
+          </div>
+          <div className="five wide column">
+            <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+          </div>
         </div>
       </>
     );

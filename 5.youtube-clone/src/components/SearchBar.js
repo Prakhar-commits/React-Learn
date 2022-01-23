@@ -13,13 +13,13 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="ui segment">
-        <div className="ui grid" style={{ justifyContent: "space-between", alignItems: "center" }}>
+        <div className="ui grid" style={{ justifyContent: "space-evenly", alignItems: "center" }}>
           <a href="/" className="two wide column">
             <Logo />
           </a>
-          <div className="ten wide column">
+          <div className="seven wide column">
             <form className="ui form" onSubmit={this.onFormSubmit}>
-              <div className="field">
+              <div className="field ui grid">
                 <input
                   type="text"
                   placeholder="Seach Video"
@@ -28,6 +28,9 @@ class SearchBar extends Component {
                   }}
                   value={this.state.term}
                 />
+                <button className="ui icon button">
+                  <i class="search icon"></i>
+                </button>
               </div>
             </form>
           </div>
