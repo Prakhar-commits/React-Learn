@@ -13,22 +13,36 @@ class App extends Component {
       },
     });
     this.setState({ videos: response.data.items });
-    console.log(response.data);
   };
 
   onVideoSelect = (video) => {
     this.setState({ selectedVideo: video });
-    console.log("Vidio:", video);
   };
+
+  mostPopularVideos = async () => {
+    const mostPopVideos = await Youtube.get("/videos", {
+      params: {
+        part: "snippet",
+        chart: "mostPopular",
+        regionCode: "IN",
+      },
+    });
+    this.setState({ videos: mostPopVideos.data.items });
+  };
+
+  componentDidMount() {
+    document.getElementById("root").addEventListener("load", this.mostPopularVideos());
+  }
 
   render() {
     return (
-      <div className="ui container">
-        <h1>Youtube Clone</h1>
+      <>
         <SearchBar onFromSubmit={this.onTermSubmit} />
-        <VideoBox video={this.state.selectedVideo} />
-        <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
-      </div>
+        <div className="ui container">
+          <VideoBox video={this.state.selectedVideo} />
+          <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+        </div>
+      </>
     );
   }
 }

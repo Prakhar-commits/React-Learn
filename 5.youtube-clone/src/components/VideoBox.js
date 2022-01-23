@@ -8,10 +8,10 @@ const VideoBox = ({ video }) => {
       <div className="ui segment">
         <div className="ui embed">
           <iframe
-            src={`https://www.youtube.com/embed/${video.id.videoId}`}
+            src={`https://www.youtube.com/embed/${video.id.videoId || video.id}`}
             title={video.snippet.title}
             frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
             allowFullScreen
           ></iframe>
         </div>
