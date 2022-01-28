@@ -31,16 +31,22 @@ const options = [
     label: "GREEN",
     value: "green",
   },
+  {
+    label: "YELLOW",
+    value: "yellow",
+  },
 ];
 
 const App = () => {
   const [selected, setSelected] = useState(options[0]);
+  const [showDropDown, setShowDropDown] = useState(true);
 
   return (
     <div className="ui container">
       {/* <Accordion items={items} /> */}
       {/* <Search /> */}
-      <Dropdown options={options} selected={selected} onSelectedChange={setSelected} />
+      <button onClick={() => setShowDropDown(!showDropDown)}>Toogle Dropdown </button>
+      {showDropDown ? <Dropdown options={options} selected={selected} onSelectedChange={setSelected} /> : null}
     </div>
   );
 };
