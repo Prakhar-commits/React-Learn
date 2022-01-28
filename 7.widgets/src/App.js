@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Dropdown from "./components/Dropdown";
 // import Search from "./components/Search";
 // import Accordion from "./components/Accordion";
+// import Dropdown from "./components/Dropdown";
+import Translate from "./components/Translate";
 
 const items = [
   {
@@ -45,8 +46,9 @@ const App = () => {
     <div className="ui container">
       {/* <Accordion items={items} /> */}
       {/* <Search /> */}
-      <button onClick={() => setShowDropDown(!showDropDown)}>Toogle Dropdown </button>
-      {showDropDown ? <Dropdown options={options} selected={selected} onSelectedChange={setSelected} /> : null}
+      {/* <button onClick={() => setShowDropDown(!showDropDown)}>Toogle Dropdown </button> */}
+      {/* {showDropDown ? <Dropdown options={options} selected={selected} onSelectedChange={setSelected} label="Select Colors" /> : null} */}
+      <Translate />
     </div>
   );
 };
