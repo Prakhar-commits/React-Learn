@@ -1,54 +1,31 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import Youtube from "../API/Youtube";
 import VideoList from "./VideoList";
 import VideoBox from "./VideoBox";
+import useVideos from "../hooks/useVideos";
 import "./style.css";
 
-class App extends Component {
-  state = { videos: [], selectedVideo: null };
-  onTermSubmit = async (term) => {
-    const response = await Youtube.get("/search", {
-      params: {
-        q: term,
-      },
-    });
-    this.setState({ videos: response.data.items, selectedVideo: response.data.items[0] });
-  };
+const App = () => {
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videos, onSearch] = useVideos();
 
-  onVideoSelect = (video) => {
-    this.setState({ selectedVideo: video });
-  };
+  useEffect(() => {
+    setSelectedVideo(videos[0]);
+  }, [videos]);
 
-  mostPopularVideos = async () => {
-    const mostPopVideos = await Youtube.get("/videos", {
-      params: {
-        chart: "mostPopular",
-        regionCode: "IN",
-      },
-    });
-    this.setState({ videos: mostPopVideos.data.items, selectedVideo: mostPopVideos.data.items[0] });
-  };
-
-  componentDidMount() {
-    document.getElementById("root").addEventListener("load", this.mostPopularVideos());
-  }
-
-  render() {
-    return (
-      <>
-        <SearchBar onFromSubmit={this.onTermSubmit} />
-        <div className="ui container grid">
-          <div className="eleven wide column">
-            <VideoBox video={this.state.selectedVideo} />
-          </div>
-          <div className="five wide column">
-            <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
-          </div>
+  return (
+    <>
+      <SearchBar onFromSubmit={onSearch} />
+      <div className="ui container grid">
+        <div className="eleven wide column">
+          <VideoBox video={selectedVideo} />
         </div>
-      </>
-    );
-  }
-}
+        <div className="five wide column">
+          <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default App;
