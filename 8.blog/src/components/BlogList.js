@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchBlogs } from "../actions";
+import { fetchBlogAndUser } from "../actions";
 import Author from "./Author";
 
 class BlogList extends Component {
   componentDidMount() {
-    this.props.fetchBlogs();
+    this.props.fetchBlogAndUser();
   }
 
   renderBlogs() {
@@ -43,4 +43,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchBlogs })(BlogList);
+export default connect(mapStateToProps, { fetchBlogAndUser })(BlogList);
