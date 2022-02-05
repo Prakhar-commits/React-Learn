@@ -13,9 +13,9 @@ const App = () => {
             <Routes>
               <Route path="/" index element={<StreamList />} />
               <Route path="/stream/new" element={<StreamCreate />} />
-              <Route path="/stream/edit" element={<StreamEdit />} />
-              <Route path="/stream/delete" element={<StreamDelete />} />
-              <Route path="/stream/show" element={<StreamShow />} />
+              <Route path="/stream/edit/:id"  element={<StreamEdit />} />
+              <Route path="/stream/delete/:id" element={<StreamDelete />} />
+              <Route path="/stream/show/:id" element={<StreamShow />} />
             </Routes>
           </Segment>
         </Container>
