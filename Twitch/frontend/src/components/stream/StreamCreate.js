@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form, Header, Message } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { createStream } from "../../actions";
 
 class StreamCreate extends Component {
   renderInput({ input, label, meta }) {
@@ -18,13 +20,23 @@ class StreamCreate extends Component {
   }
 
   render() {
+    const { isSignedIn, handleSubmit, createStream } = this.props;
     return (
-      <Form onSubmit={this.props.handleSubmit((formValues) => console.log(formValues))}>
-        <Header as="h2">Upload Video</Header>
-        <Field name="title" component={this.renderInput} label="Enter Title" />
-        <Field name="description" component={this.renderInput} label="Enter Description" />
-        <Button type="submit">Submit</Button>
-      </Form>
+      <>
+        {isSignedIn ? (
+          <Form onSubmit={handleSubmit((formValues) => createStream(formValues))}>
+            <Header as="h2">Upload Video</Header>
+            <Field name="title" component={this.renderInput} label="Enter Title" />
+            <Field name="description" component={this.renderInput} label="Enter Description" />
+            <Button type="submit">Submit</Button>
+          </Form>
+        ) : (
+          <>
+            <Header as="h2">Upload Video</Header>
+            <Header as="h4">Please Login !!!</Header>
+          </>
+        )}
+      </>
     );
   }
 }
@@ -41,7 +53,15 @@ const validateForm = (formValues) => {
   return errors;
 };
 
-export default reduxForm({
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.auth.isSignedIn,
+  };
+};
+
+const formWrap = reduxForm({
   form: "stream Create",
   validate: validateForm,
 })(StreamCreate);
+
+export default connect(mapStateToProps, { createStream })(formWrap);
