@@ -4,7 +4,7 @@
   "description": "backend of twitch clone ",
   "main": "index.js",
   "scripts": {
-    "start": "json-server -w db.json -p 3001"
+    "start": "json-server -w db.json"
   },
   "author": "Drish",
   "license": "ISC",
