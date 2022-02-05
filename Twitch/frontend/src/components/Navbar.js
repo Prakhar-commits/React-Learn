@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Icon, Menu } from "semantic-ui-react";
 import GoogleAuth from "../Auth/GoogleAuth";
-const Navbar = () => {
+
+const Navbar = ({ isSignedIn }) => {
   const [activeMenu, setActiveMenu] = useState("twitch");
   const handleClick = (e, { name }) => setActiveMenu(name);
   return (
@@ -12,18 +14,22 @@ const Navbar = () => {
         Twitch
       </Menu.Item>
       <Menu.Menu position="right">
-        <Menu.Item name="create" as={Link} to="/stream/new" active={activeMenu === "create"} onClick={handleClick}>
-          <Icon name="upload" />
-          Upload
-        </Menu.Item>
+        {isSignedIn ? (
+          <Menu.Item name="create" as={Link} to="/stream/new" active={activeMenu === "create"} onClick={handleClick}>
+            <Icon name="upload" />
+            Upload
+          </Menu.Item>
+        ) : null}
         <GoogleAuth />
-        {/* <Menu.Item name="login" as={Link} to="/login" active={activeMenu === "login"} onClick={handleClick}>
-          <Icon name="user plus" />
-          Login
-        </Menu.Item> */}
       </Menu.Menu>
     </Menu>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.auth.isSignedIn,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
