@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Button, Form, Header, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createStream } from "../../actions";
-
+import { Navigate } from "react-router-dom";
 class StreamCreate extends Component {
   renderInput({ input, label, meta }) {
     return (
@@ -19,12 +19,19 @@ class StreamCreate extends Component {
     );
   }
 
+  state = { submited: false };
+  submitMyForm(data) {
+    return this.props.createStream(data).then(() => {
+      this.setState({ submited: true });
+    });
+  }
+
   render() {
-    const { isSignedIn, handleSubmit, createStream } = this.props;
+    const { isSignedIn, handleSubmit } = this.props;
     return (
       <>
         {isSignedIn ? (
-          <Form onSubmit={handleSubmit((formValues) => createStream(formValues))}>
+          <Form name="upload-form" onSubmit={handleSubmit(this.submitMyForm.bind(this))}>
             <Header as="h2">Upload Video</Header>
             <Field name="title" component={this.renderInput} label="Enter Title" />
             <Field name="description" component={this.renderInput} label="Enter Description" />
@@ -36,6 +43,7 @@ class StreamCreate extends Component {
             <Header as="h4">Please Login !!!</Header>
           </>
         )}
+        {this.state.submited && <Navigate to="/" replace={true} />}
       </>
     );
   }
