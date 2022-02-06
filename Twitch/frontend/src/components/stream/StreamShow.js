@@ -12,7 +12,6 @@ const StreamShow = ({ fetchStream }) => {
     fetchStream(id);
   }, []);
 
-  console.log(stream);
   if (!stream) {
     return <Loader size="huge">Loading</Loader>;
   }

@@ -1,19 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchStreams, deleteStream } from "../../actions";
-import { Card, Button, Header, Image, Confirm } from "semantic-ui-react";
+import { fetchStreams } from "../../actions";
+import { Card, Button, Header, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 class StreamList extends Component {
-  state = { open: false };
-
   componentDidMount() {
     this.props.fetchStreams();
   }
-
-  delete = ({ id }) => {
-    this.props.deleteStream(id);
-    this.setState({ open: false });
-  };
 
   renderStreams = () => {
     return this.props.streams.map((stream) => {
@@ -30,10 +23,9 @@ class StreamList extends Component {
                 <Button as={Link} to={`/stream/edit/${stream.id}`} basic color="green">
                   Edit
                 </Button>
-                <Button basic color="red" onClick={() => this.setState({ open: true })}>
+                <Button basic color="red" as={Link} to={`/stream/edit/${stream.id}`}>
                   Delete
                 </Button>
-                <Confirm size="mini" open={this.state.open} onCancel={() => this.setState({ open: false })} onConfirm={() => this.delete(stream)} />
               </div>
             </Card.Content>
           ) : null}
@@ -61,4 +53,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchStreams, deleteStream })(StreamList);
+export default connect(mapStateToProps, { fetchStreams })(StreamList);
