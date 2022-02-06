@@ -8,12 +8,12 @@ const App = () => {
     <div>
       <Router>
         <Navbar />
-        <Container>
-          <Segment raised>
+        <Container style={{ minHeight: "calc(100vh - 70px)" }}>
+          <Segment padded="very">
             <Routes>
               <Route path="/" index element={<StreamList />} />
               <Route path="/stream/new" element={<StreamCreate />} />
-              <Route path="/stream/edit/:id"  element={<StreamEdit />} />
+              <Route path="/stream/edit/:id" element={<StreamEdit />} />
               <Route path="/stream/delete/:id" element={<StreamDelete />} />
               <Route path="/stream/show/:id" element={<StreamShow />} />
             </Routes>
